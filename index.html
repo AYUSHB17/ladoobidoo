@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ladoo Bidoo — Premium Motichoor Ladoo</title>
+    <link rel="icon" href="/Ladoo_Bidoo_Logo.png" type="image/png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cream:    { DEFAULT: '#FFF8ED', 50: '#FFFDF8', 100: '#FFF8ED', 200: '#FFEEC8', 300: '#FFE0A0' },
+              orange:   { DEFAULT: '#D4500A', light: '#E8621A', dark: '#A83A06', muted: '#F0864A' },
+              marigold: { DEFAULT: '#F5A623', light: '#FFBE4D', dark: '#C07D0E' },
+              terracotta:{ DEFAULT: '#8B2500', light: '#B03010', dark: '#5A1500' },
+              gold:     { DEFAULT: '#C9972B', light: '#E8B84B' },
+              brown:    { DEFAULT: '#5C2D0E', light: '#7A3D1A' },
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'Georgia', 'serif'],
+              sans:  ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ── Global parchment texture ────────────────────────────────── */
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #FFF8ED;
+        overflow-x: hidden;
+      }
+
+      /* Subtle noise/grain parchment overlay */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.045;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-size: 300px 300px;
+      }
+
+      /* Paithani / rangoli border top */
+      .paithani-border-top {
+        background: repeating-linear-gradient(
+          90deg,
+          #D4500A 0px, #D4500A 6px,
+          #F5A623 6px, #F5A623 12px,
+          #8B2500 12px, #8B2500 18px,
+          #F5A623 18px, #F5A623 24px
+        );
+        height: 5px;
+      }
+
+      /* Paithani repeating diamond border */
+      .paithani-border-bottom {
+        background: repeating-linear-gradient(
+          90deg,
+          #8B2500 0px, #8B2500 4px,
+          #F5A623 4px, #F5A623 8px,
+          #D4500A 8px, #D4500A 12px,
+          #F5A623 12px, #F5A623 16px
+        );
+        height: 4px;
+      }
+
+      /* ── Stamp / postage style ────────────────────────────────────── */
+      .stamp {
+        border: 3px solid currentColor;
+        position: relative;
+        padding: 6px;
+      }
+      .stamp::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        border: 3px dashed currentColor;
+        border-radius: 2px;
+      }
+
+      /* Jagged stamp border via radial-gradient */
+      .stamp-jagged {
+        --c: #FFF8ED;
+        --sz: 8px;
+        padding: 14px;
+        background:
+          radial-gradient(circle at 0   50%, var(--c) var(--sz), transparent 0),
+          radial-gradient(circle at 100% 50%, var(--c) var(--sz), transparent 0),
+          radial-gradient(circle at 50%  0,   var(--c) var(--sz), transparent 0),
+          radial-gradient(circle at 50%  100%,var(--c) var(--sz), transparent 0);
+        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+        background-size: calc(var(--sz)*2) calc(var(--sz)*2),
+                         calc(var(--sz)*2) calc(var(--sz)*2),
+                         calc(var(--sz)*2) calc(var(--sz)*2),
+                         calc(var(--sz)*2) calc(var(--sz)*2);
+        background-position: 0 0, 0 100%, 0 0, 100% 0;
+        background-color: #FFF8ED;
+      }
+
+      .stamp-jagged-dark {
+        --c: #6B1A00;
+        background-color: #FFF0D0;
+      }
+
+      /* ── Rotating text path ───────────────────────────────────────── */
+      @keyframes rotate-ring {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      .rotating-ring {
+        animation: rotate-ring 18s linear infinite reverse;
+        transform-origin: center;
+      }
+
+      /* ── Section divider ornament ────────────────────────────────── */
+      .ornament-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #D4500A;
+      }
+      .ornament-divider::before,
+      .ornament-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D4500A80, transparent);
+      }
+
+      /* ── Wax seal ─────────────────────────────────────────────────── */
+      .wax-seal {
+        background: radial-gradient(circle at 38% 35%, #E8B84B, #C9972B 45%, #8B6010 100%);
+        border: 2px solid #E8B84B88;
+        box-shadow:
+          0 4px 16px #0006,
+          inset 0 1px 4px #fff5;
+        border-radius: 50%;
+      }
+
+      /* ── Hero textured parchment background ──────────────────────── */
+      .hero-bg {
+        background-color: #FBF1DE;
+        background-image:
+          /* warm radial glow, very subtle */
+          radial-gradient(ellipse 70% 60% at 55% 45%, rgba(245,166,35,0.10) 0%, transparent 70%),
+          /* paper fiber noise */
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.35  0 0 0 0 0.12  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E"),
+          /* faint diagonal paper creases */
+          repeating-linear-gradient(135deg, transparent 0px, transparent 80px, rgba(139,37,0,0.025) 80px, rgba(139,37,0,0.025) 81px);
+        background-size: 100% 100%, 400px 400px, auto;
+      }
+      /* extra tactile vignette overlay on hero */
+      .hero-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(92,45,14,0.10) 100%);
+        z-index: 0;
+      }
+
+      /* ── Intricate dark-brown marigold micro-border (navbar top) ──── */
+      .marigold-micro-border {
+        height: 14px;
+        background:
+          repeating-linear-gradient(90deg,
+            #4A2711 0px, #4A2711 3px,
+            #C07D0E 3px, #C07D0E 6px,
+            #4A2711 6px, #4A2711 9px,
+            #F5A623 9px, #F5A623 12px),
+          repeating-linear-gradient(90deg,
+            transparent 0px, transparent 11px,
+            #4A2711 11px, #4A2711 12px);
+        border-bottom: 2px solid #4A2711;
+        box-shadow: 0 2px 4px rgba(74,39,17,0.3);
+      }
+
+      /* ── Vintage postage stamp (true jagged edge via mask) ───────── */
+      .vintage-stamp {
+        position: relative;
+        background: #FFFEF7;
+        padding: 8px;
+        box-shadow: 0 6px 18px rgba(74,39,17,0.28), 0 2px 4px rgba(74,39,17,0.18);
+        /* jagged perforated edge using radial-gradient mask */
+        -webkit-mask:
+          radial-gradient(circle 5px at 5px 50%, transparent 98%, #000 100%) left repeat-y,
+          radial-gradient(circle 5px at calc(100% - 5px) 50%, transparent 98%, #000 100%) right repeat-y,
+          radial-gradient(circle 5px at 50% 5px, transparent 98%, #000 100%) top repeat-x,
+          radial-gradient(circle 5px at 50% calc(100% - 5px), transparent 98%, #000 100%) bottom repeat-x;
+        mask:
+          radial-gradient(circle 5px at 5px 50%, transparent 98%, #000 100%) left repeat-y,
+          radial-gradient(circle 5px at calc(100% - 5px) 50%, transparent 98%, #000 100%) right repeat-y,
+          radial-gradient(circle 5px at 50% 5px, transparent 98%, #000 100%) top repeat-x,
+          radial-gradient(circle 5px at 50% calc(100% - 5px), transparent 98%, #000 100%) bottom repeat-x;
+        -webkit-mask-size: 10px 10px, 10px 10px, 10px 10px, 10px 10px;
+        mask-size: 10px 10px, 10px 10px, 10px 10px, 10px 10px;
+      }
+      .vintage-stamp-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: 2px solid rgba(74,39,17,0.55);
+        box-shadow: inset 0 0 0 2px #FFFEF7, inset 0 0 0 3px rgba(74,39,17,0.4);
+      }
+
+      /* ── Story section bg ────────────────────────────────────────── */
+      .story-bg {
+        background: linear-gradient(160deg, #FFF3DC 0%, #FFE9B8 60%, #FFD580 100%);
+      }
+
+      /* ── Product section bg ──────────────────────────────────────── */
+      .product-bg {
+        background: linear-gradient(135deg, #FFF8ED 0%, #FFECC8 50%, #FFD580 100%);
+      }
+      .product-frame {
+        position: relative;
+        background: #FFF8ED;
+        border: 3px solid rgba(212,80,10,0.18);
+        border-radius: 1.25rem;
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.8),
+          0 15px 35px rgba(0,0,0,0.14);
+      }
+
+      /* ── Why us dividers ─────────────────────────────────────────── */
+      .why-col + .why-col {
+        border-left: 1px solid #D4500A30;
+      }
+
+      /* ── Testimonials bg ─────────────────────────────────────────── */
+      .testimonials-bg {
+        background: linear-gradient(135deg, #6B1A00 0%, #8B2500 50%, #5A1500 100%);
+      }
+
+      /* ── Footer bg ────────────────────────────────────────────────── */
+      .footer-bg {
+        background: linear-gradient(135deg, #FFF3DC 0%, #FFE9B8 100%);
+      }
+
+      /* ── Smooth scroll ────────────────────────────────────────────── */
+      html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+
+      /* ── Nav link hover ───────────────────────────────────────────── */
+      .nav-link {
+        position: relative;
+        transition: color .25s;
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -3px; left: 0;
+        width: 0; height: 2px;
+        background: #D4500A;
+        transition: width .3s ease;
+        border-radius: 2px;
+      }
+      .nav-link:hover::after { width: 100%; }
+      .nav-link:hover { color: #D4500A; }
+
+      /* ── Button hover states ──────────────────────────────────────── */
+      .btn-primary {
+        transition: transform .2s, box-shadow .2s, background-color .2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px #D4500A44;
+      }
+      .btn-outline {
+        transition: transform .2s, background-color .2s, color .2s;
+      }
+      .btn-outline:hover {
+        background-color: #D4500A;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* ── Card hover ────────────────────────────────────────────────── */
+      .review-card {
+        transition: transform .25s, box-shadow .25s;
+      }
+      .review-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px #0003;
+      }
+
+      /* ── Warli watermark (decorative SVG overlay) ─────────────────── */
+      .warli-watermark {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.07;
+      }
+
+      .section-decorated {
+        position: relative;
+        overflow: hidden;
+      }
+      .section-deco {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.85;
+        z-index: 0;
+      }
+      .section-deco img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .section-deco-top-left { top: 0; left: 0; }
+      .section-deco-top-right { top: 0; right: 0; }
+      .section-deco-bottom-left { bottom: 0; left: 0; }
+      .section-deco-bottom-right { bottom: 0; right: 0; }
+
+      /* ── Marigold garland border sprite ──────────────────────────── */
+      .garland-border {
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent 0px, transparent 18px,
+          #F5A62344 18px, #F5A62344 20px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px, transparent 18px,
+          #D4500A22 18px, #D4500A22 20px
+        );
+      }
+
+      /* ── Diagonal pinstripe subtle bg ────────────────────────────── */
+      .pinstripe {
+        background-image: repeating-linear-gradient(
+          135deg,
+          transparent,
+          transparent 20px,
+          #F5A62308 20px,
+          #F5A62308 22px
+        );
+      }
+
+      /* ── Torn paper edge ─────────────────────────────────────────── */
+      .torn-top {
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='30' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q36,28 72,14 Q108,0 144,20 Q180,28 216,10 Q252,0 288,22 Q324,28 360,12 Q396,0 432,18 Q468,28 504,8 Q540,0 576,24 Q612,28 648,14 Q684,0 720,20 Q756,28 792,10 Q828,0 864,22 Q900,28 936,12 Q972,0 1008,18 Q1044,28 1080,8 Q1116,0 1152,24 Q1188,28 1224,14 Q1260,0 1296,20 Q1332,28 1368,10 L1440,10 L1440,30 L0,30 Z' fill='%23000'/%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='30' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q36,28 72,14 Q108,0 144,20 Q180,28 216,10 Q252,0 288,22 Q324,28 360,12 Q396,0 432,18 Q468,28 504,8 Q540,0 576,24 Q612,28 648,14 Q684,0 720,20 Q756,28 792,10 Q828,0 864,22 Q900,28 936,12 Q972,0 1008,18 Q1044,28 1080,8 Q1116,0 1152,24 Q1188,28 1224,14 Q1260,0 1296,20 Q1332,28 1368,10 L1440,10 L1440,30 L0,30 Z' fill='%23000'/%3E%3C/svg%3E");
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        height: 30px;
+      }
+
+      /* Mobile: hide absolute decorative elements */
+      @media (max-width: 768px) {
+        .warli-watermark { display: none; }
+        .decor-hide-mobile { display: none !important; }
+      }
+
+      /* ── Floating badge animation ─────────────────────────────────── */
+      @keyframes float-badge {
+        0%, 100% { transform: translateY(0px) rotate(-6deg); }
+        50%       { transform: translateY(-6px) rotate(-6deg); }
+      }
+      .float-badge { animation: float-badge 3s ease-in-out infinite; }
+
+      /* ── Star shimmer ────────────────────────────────────────────── */
+      @keyframes shimmer-star {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.6; }
+      }
+      .star-shimmer { animation: shimmer-star 2s ease-in-out infinite; }
+
+      /* Nav scroll shadow */
+      header.scrolled {
+        background-color: rgba(255,248,237,0.97) !important;
+        box-shadow: 0 2px 20px rgba(212,80,10,0.12);
+      }
+    </style>
+  </head>
+
+  <body class="relative">
+
+    <!-- ════════════════════════════════════════════════════════════════
+         HEADER / NAVIGATION
+    ════════════════════════════════════════════════════════════════ -->
+    <header id="main-header" class="sticky top-6 z-40 overflow-visible transition-all duration-300" style="background-color: rgba(255,248,237,0.97); box-shadow: 0 2px 20px rgba(212,80,10,0.12);">
+      <!-- Left vertical design decoration -->
+      <div class="absolute left-0 top-0 bottom-0 w-24 pointer-events-none" style="background-image: url('/Laddoos.png'); background-size: cover; background-repeat: no-repeat; background-position: left center;transform: scaleX(-1);"></div>
+      
+      <!-- Right vertical design decoration -->
+      <div class="absolute right-0 top-0 bottom-0 w-24 pointer-events-none" style="background-image: url('/Laddoos.png'); background-size: cover; background-repeat: no-repeat; background-position: right center;transform: scaleX(-1); "></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
+
+          <!-- Logo -->
+          <a href="#home" class="flex-shrink-0 flex items-center gap-3 relative" style="margin-left: 60px;">
+            <div class="absolute left-0 top-1/2 w-28 h-28 rounded-full overflow-visible border-2 border-[2px] shadow-xl bg-[#FFF8ED] -translate-y-1/2" style="border-color:#D4500A;">
+              <img src="/Logo_ladoo.png" alt="Ladoo Bidoo Logo" class="w-full h-full object-contain" />
+            </div>
+            <!-- <span class="font-serif font-bold text-lg hidden sm:block pl-36" style="color:#5C2D0E;">Ladoo Bidoo</span> -->
+          </a>
+
+          <!-- Desktop Nav -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="#home"     class="nav-link text-md font-medium" style="color:#5C2D0E;">Home</a>
+            <a href="#story"    class="nav-link text-md font-medium" style="color:#5C2D0E;">Our Story</a>
+            <a href="#product"  class="nav-link text-md font-medium" style="color:#5C2D0E;">Our Ladoo</a>
+            <a href="#why-us"   class="nav-link text-md font-medium" style="color:#5C2D0E;">Why Us</a>
+            <a href="#contact"  class="nav-link text-md font-medium" style="color:#5C2D0E;">Contact</a>
+          </nav>
+
+          <!-- CTA Button -->
+          <a href="https://wa.me/917666621696" target="_blank" rel="noopener"
+             class="btn-primary flex items-center gap-2 px-4 py-2.5 md:px-5 md:py-3 rounded-full text-sm font-semibold text-white shadow-lg"
+             style="background-color:#D4500A; margin-right: 60px;">
+            <!-- WhatsApp icon inline SVG -->
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L.057 23.5l5.798-1.519A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.787 9.787 0 01-5.048-1.4l-.361-.217-3.746.982.998-3.648-.236-.374A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+            </svg>
+            <span class="hidden sm:inline">Order via WhatsApp</span>
+            <span class="sm:hidden">Order</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="home" class="relative z-10 mt-24 md:mt-6">
+
+      <!-- ═══════════════════════════════════════════════════════════
+           HERO SECTION
+      ═══════════════════════════════════════════════════════════ -->
+      <section class="hero-bg section-decorated pt-20 pb-12 md:pt-24 md:pb-14 lg:pt-18 lg:pb-8 lg:flex lg:items-center">
+
+        <!-- Background marigold mandala watermark -->
+        <div class="warli-watermark" style="right:8%;bottom:-40px;width:360px;height:360px;opacity:0.05;z-index:0;">
+          <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="180" cy="180" r="160" stroke="#4A2711" stroke-width="1.5" stroke-dasharray="8 6"/>
+            <circle cx="180" cy="180" r="130" stroke="#C07D0E" stroke-width="1.5"/>
+            <circle cx="180" cy="180" r="100" stroke="#4A2711" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <circle cx="180" cy="180" r="70" stroke="#C07D0E" stroke-width="1.5"/>
+            <g stroke="#4A2711" stroke-width="1.5" fill="none">
+              <path d="M180 50 Q200 115 180 130 Q160 115 180 50Z"/>
+              <path d="M180 310 Q200 245 180 230 Q160 245 180 310Z"/>
+              <path d="M50 180 Q115 200 130 180 Q115 160 50 180Z"/>
+              <path d="M310 180 Q245 200 230 180 Q245 160 310 180Z"/>
+              <path d="M93 93 Q143 143 135 165 Q113 157 93 93Z"/>
+              <path d="M267 267 Q217 217 225 195 Q247 203 267 267Z"/>
+              <path d="M267 93 Q217 143 225 165 Q247 157 267 93Z"/>
+              <path d="M93 267 Q143 217 135 195 Q113 203 93 267Z"/>
+            </g>
+            <circle cx="180" cy="180" r="30" stroke="#C07D0E" stroke-width="2"/>
+            <circle cx="180" cy="180" r="12" fill="#C07D0E" opacity="0.4"/>
+          </svg>
+        </div>
+
+        <div class="section-deco section-deco-top-left section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-top-right section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" class="-scale-x-100"/>
+        </div>
+        <div class="section-deco section-deco-bottom-left section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Flowers_Utensils_Leaves.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-bottom-right section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Marigold_Flowers.png" alt="Decorative corner design" />
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 w-full">
+          <div class="grid lg:grid-cols-2 gap-10 lg:gap-8 items-center">
+
+            <!-- ═══ LEFT: Text content (left-aligned, vertically centered) ═══ -->
+            <div class="text-center lg:text-left order-2 lg:order-1">
+
+              <!-- Badge -->
+              <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-[11px] font-semibold tracking-[0.2em] uppercase mb-5"
+                style="border-color:#4A2711;color:#4A2711;background:rgba(74,39,17,0.06);">
+                <span>✦</span>
+                <span>Ladoos Made with Love</span>
+                <span>✦</span>
+              </div>
+
+              <!-- Heading + Ornament -->
+              <div class="inline-block">
+                <h1
+                  class="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] tracking-tight"
+                  style="color:#4A2711;text-shadow:0 1px 0 rgba(255,255,255,0.5);">
+                  Ladoo Bidoo
+                </h1>
+
+                <!-- Ornament Rule -->
+                <div class="flex items-center gap-4 mt-4 mb-5 w-full">
+                  <div class="flex-1 h-px" style="background:#4A2711;"></div>
+
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <circle cx="9" cy="9" r="3" fill="#4A2711"/>
+                    <circle cx="9" cy="9" r="7" stroke="#C07D0E" stroke-width="1.5" fill="none"/>
+                  </svg>
+
+                  <div class="flex-1 h-px" style="background:#4A2711;"></div>
+                </div>
+              </div>
+
+              <p
+                class="text-base md:text-lg font-serif font-semibold mb-3"
+                style="color:#4A2711;">
+                Traditional Motichoor Ladoo, Made with Love &amp; Pure Ingredients.
+              </p>
+
+              <p
+                class="text-sm md:text-base font-sans mb-8 max-w-md mx-auto lg:mx-0"
+                style="color:#6B3A1A;">
+                Born from passion and purpose, we bring you authentic ghee ladoos crafted
+                with care — each one a bite of pure tradition.
+              </p>
+
+              <!-- CTA Buttons -->
+              <!-- <div class="flex flex-wrap gap-3 justify-center lg:justify-start">
+                <a
+                  href="#product"
+                  class="btn-primary px-7 py-3 rounded-full font-semibold text-white text-sm shadow-lg"
+                  style="background:#D4500A;">
+                  Our Ladoo
+                </a>
+
+                <a
+                  href="#story"
+                  class="btn-outline px-7 py-3 rounded-full font-semibold text-sm border-2"
+                  style="border-color:#4A2711;color:#4A2711;">
+                  Our Story
+                </a>
+              </div> -->
+
+            </div>
+
+            <!-- ═══ RIGHT: Circular ladoo frame flanked by stamps ═══════ -->
+            <div class="order-1 lg:order-2 relative flex items-center justify-center min-h-[420px]">
+
+              <!-- Center circular ladoo frame (large, dominant) -->
+              <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-[420px] md:h-[420px] lg:w-[460px] lg:h-[460px] mx-auto z-10">
+
+                <!-- Rotating SVG text ring (tight loop, elegant serif) -->
+                <svg class="absolute inset-0 w-full h-full rotating-ring" viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <path id="hero-text-circle"
+                      d="M230,230 m-205,0 a205,205 0 1,1 410,0 a205,205 0 1,1 -410,0"/>
+                  </defs>
+                  <text fill="#4A2711" font-size="17" font-family="Playfair Display, Georgia, serif" font-weight="700" letter-spacing="6">
+                    <textPath href="#hero-text-circle" startOffset="0%">
+                      MOTICHOOR LADOO • MADE WITH LOVE • मोतीचूर लड्डू • प्रेम से बनाया • मोतीचूर लाडू • प्रेमाने बनवलेले • 
+                    </textPath>
+                  </text>
+                </svg>
+
+                <!-- Outer decorative dashed ring -->
+                <!-- <div class="absolute inset-[18px] rounded-full border-[3px] border-dashed" style="border-color:#C07D0E;"></div> -->
+
+                <!-- Inner photo circle (deep brown frame) -->
+                <div class="absolute inset-[34px] rounded-full overflow-hidden shadow-2xl" style="border:6px solid #4A2711;box-shadow:0 10px 40px rgba(74,39,17,0.45), inset 0 0 0 2px #C07D0E;">
+                  <img
+                    id="hero-ladoo-img"
+                    src="Motichoor_ladoo.png"
+                    alt="Motichoor Ladoo — Ladoo Bidoo"
+                    class="w-full h-full object-cover"
+                    style="object-position:center 35%;"
+                  />
+                  <!-- Warm tint overlay -->
+                  <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(245,166,35,0.12),transparent 55%);"></div>
+                </div>
+              </div>
+
+              <!-- ═══ LEFT STAMPS (2 stacked, adjacent to circle) ═════ -->
+              <!-- <div class="decor-hide-mobile absolute left-0 top-1/2 -translate-y-1/2 flex flex-col gap-4 lg:gap-6 z-20"> -->
+
+                <!-- Stamp 1: Diya (orange) -->
+                <!-- <div class="vintage-stamp w-20 h-28 lg:w-24 lg:h-32" style="transform:rotate(-8deg);">
+                  <div class="vintage-stamp-inner flex flex-col items-center justify-between p-2" style="background:#FBE7C8;">
+                    <svg viewBox="0 0 60 70" class="w-12 h-12 lg:w-14 lg:h-14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <ellipse cx="30" cy="52" rx="22" ry="8" fill="#C07D0E" opacity="0.5"/>
+                      <path d="M8 48 Q30 38 52 48 Q50 58 30 60 Q10 58 8 48Z" fill="#D4500A"/>
+                      <ellipse cx="30" cy="48" rx="22" ry="8" fill="#E8621A"/>
+                      <line x1="30" y1="38" x2="30" y2="18" stroke="#C07D0E" stroke-width="2"/>
+                      <ellipse cx="30" cy="14" rx="4" ry="7" fill="#FFBE4D"/>
+                      <ellipse cx="30" cy="11" rx="2" ry="4" fill="#FFF"/>
+                    </svg>
+                    <span class="text-[9px] lg:text-[10px] font-bold tracking-widest" style="color:#4A2711;">DIYA</span>
+                  </div>
+                </div> -->
+
+                <!-- Stamp 2: Marigold (blue) -->
+                <!-- <div class="vintage-stamp w-20 h-28 lg:w-24 lg:h-32" style="transform:rotate(6deg);">
+                  <div class="vintage-stamp-inner flex flex-col items-center justify-between p-2" style="background:#D6E8F2;">
+                    <svg viewBox="0 0 60 70" class="w-12 h-12 lg:w-14 lg:h-14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="30" cy="35" r="10" fill="#F5A623"/>
+                      <g stroke="#D4500A" stroke-width="1.5">
+                        <ellipse cx="30" cy="18" rx="4" ry="8" fill="#F5A623"/>
+                        <ellipse cx="30" cy="52" rx="4" ry="8" fill="#F5A623"/>
+                        <ellipse cx="13" cy="35" rx="8" ry="4" fill="#F5A623"/>
+                        <ellipse cx="47" cy="35" rx="8" ry="4" fill="#F5A623"/>
+                        <ellipse cx="18" cy="23" rx="4" ry="8" fill="#FFBE4D" transform="rotate(-45 18 23)"/>
+                        <ellipse cx="42" cy="23" rx="4" ry="8" fill="#FFBE4D" transform="rotate(45 42 23)"/>
+                        <ellipse cx="18" cy="47" rx="4" ry="8" fill="#FFBE4D" transform="rotate(45 18 47)"/>
+                        <ellipse cx="42" cy="47" rx="4" ry="8" fill="#FFBE4D" transform="rotate(-45 42 47)"/>
+                      </g>
+                      <circle cx="30" cy="35" r="7" fill="#C07D0E"/>
+                    </svg>
+                    <span class="text-[9px] lg:text-[10px] font-bold tracking-widest" style="color:#1A4A6B;">MARIGOLD</span>
+                  </div>
+                </div>
+              </div> -->
+
+              <!-- ═══ RIGHT STAMPS (2 stacked, adjacent to circle) ═════ -->
+              <!-- <div class="decor-hide-mobile absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-4 lg:gap-6 z-20"> -->
+
+                <!-- Stamp 3: Banana leaf (green) -->
+                <!-- <div class="vintage-stamp w-20 h-28 lg:w-24 lg:h-32" style="transform:rotate(7deg);">
+                  <div class="vintage-stamp-inner flex flex-col items-center justify-between p-2" style="background:#D8EFD8;">
+                    <svg viewBox="0 0 50 60" class="w-12 h-12 lg:w-14 lg:h-14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M25 5 Q45 25 35 50 Q25 55 15 50 Q5 25 25 5Z" fill="#2D7A2D"/>
+                      <line x1="25" y1="5" x2="25" y2="55" stroke="#1A4A1A" stroke-width="1.5"/>
+                      <line x1="15" y1="20" x2="35" y2="20" stroke="#1A4A1A" stroke-width="1" opacity="0.6"/>
+                      <line x1="12" y1="30" x2="38" y2="30" stroke="#1A4A1A" stroke-width="1" opacity="0.6"/>
+                      <line x1="15" y1="40" x2="35" y2="40" stroke="#1A4A1A" stroke-width="1" opacity="0.6"/>
+                    </svg>
+                    <span class="text-[9px] lg:text-[10px] font-bold tracking-widest" style="color:#1A4A1A;">PAAN</span>
+                  </div>
+                </div> -->
+
+                <!-- Stamp 4: Diwali lamp (purple/violet accent) -->
+                <!-- <div class="vintage-stamp w-20 h-28 lg:w-24 lg:h-32" style="transform:rotate(-6deg);">
+                  <div class="vintage-stamp-inner flex flex-col items-center justify-between p-2" style="background:#EFE3F2;">
+                    <svg viewBox="0 0 60 70" class="w-12 h-12 lg:w-14 lg:h-14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="30" y1="4" x2="30" y2="20" stroke="#6B2D7A" stroke-width="2"/>
+                      <path d="M18 22 Q30 18 42 22 L38 40 Q30 44 22 40 Z" fill="#8B3A9E"/>
+                      <ellipse cx="30" cy="22" rx="12" ry="4" fill="#A855B8"/>
+                      <line x1="30" y1="18" x2="30" y2="8" stroke="#C07D0E" stroke-width="1.5"/>
+                      <ellipse cx="30" cy="6" rx="3" ry="5" fill="#FFBE4D"/>
+                      <ellipse cx="30" cy="4" rx="1.5" ry="3" fill="#FFF"/>
+                      <line x1="22" y1="40" x2="20" y2="50" stroke="#6B2D7A" stroke-width="1.5"/>
+                      <line x1="38" y1="40" x2="40" y2="50" stroke="#6B2D7A" stroke-width="1.5"/>
+                      <circle cx="20" cy="52" r="2" fill="#C07D0E"/>
+                      <circle cx="40" cy="52" r="2" fill="#C07D0E"/>
+                    </svg>
+                    <span class="text-[9px] lg:text-[10px] font-bold tracking-widest" style="color:#4A1A5A;">DIWALI</span>
+                  </div>
+                </div>
+              </div> -->
+
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           OUR STORY SECTION
+      ═══════════════════════════════════════════════════════════ -->
+      <section id="story" class="story-bg section-decorated py-16 md:py-20">
+
+        <!-- Paithani decorative rule -->
+        <div class="absolute top-0 left-0 right-0 paithani-border-top opacity-60"></div>
+
+        <div class="section-deco section-deco-top-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-top-right section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" class="-scale-x-100"/>
+        </div>
+        <div class="section-deco section-deco-bottom-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Dhol_Player.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-bottom-right hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Shaniwar_wada.png" alt="Decorative corner design" />
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+          <!-- Section heading -->
+          <!-- <div class="text-center mb-14">
+            <div class="ornament-divider max-w-xs mx-auto mb-4">
+              <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="#D4500A"/><circle cx="10" cy="10" r="8" stroke="#F5A623" stroke-width="1.5" fill="none"/></svg>
+            </div>
+          </div> -->
+
+          <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            <!-- Left: illustration circle -->
+            <div class="flex justify-center lg:justify-start">
+              <div class="relative">
+                <!-- Outer decorative ring -->
+                <div class="w-80 h-80 md:w-[28rem] md:h-[28rem] lg:w-[460px] lg:h-[460px] rounded-full"
+                     style="background:radial-gradient(circle at 40% 40%,#FFD580,#F5A623 60%,#D4500A 100%);padding:6px;">
+                  <div class="w-full h-full rounded-full overflow-hidden border-4" style="border-color:#FFF8ED;">
+                    <img
+                      id="story-group-illustration"
+                      src="Logo_ladoo.png"
+                      alt="Happy people celebrating with sweets"
+                      class="w-full h-full object-contain"
+                    >
+                  </div>
+                </div>
+
+                <!-- Floating marigold dot badge -->
+                <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center shadow-xl float-badge"
+                     style="background:#D4500A;">
+                  <svg viewBox="0 0 40 40" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="7" fill="#FFF"/>
+                    <g fill="#FFF" opacity="0.85">
+                      <ellipse cx="20" cy="8"  rx="3" ry="6"/>
+                      <ellipse cx="20" cy="32" rx="3" ry="6"/>
+                      <ellipse cx="8"  cy="20" rx="6" ry="3"/>
+                      <ellipse cx="32" cy="20" rx="6" ry="3"/>
+                      <ellipse cx="11" cy="11" rx="3" ry="6" transform="rotate(-45 11 11)"/>
+                      <ellipse cx="29" cy="11" rx="3" ry="6" transform="rotate(45 29 11)"/>
+                      <ellipse cx="11" cy="29" rx="3" ry="6" transform="rotate(45 11 29)"/>
+                      <ellipse cx="29" cy="29" rx="3" ry="6" transform="rotate(-45 29 29)"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Story text -->
+            <div>
+              <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4" style="color:#5C2D0E;">Our Story</h2>
+              <div class="flex items-center gap-3 mb-6">
+                <div class="h-1 w-16 rounded-full" style="background:linear-gradient(90deg,#D4500A,#F5A623);"></div>
+                <div class="w-2 h-2 rounded-full" style="background:#D4500A;"></div>
+              </div>
+
+              <div class="space-y-5 text-base leading-relaxed" style="color:#7A3D1A;">
+                <p>
+                  Ladoo Bidoo is more than just a sweet — it's a feeling, a memory, a tradition. Every ladoo we make carries the warmth of a home kitchen and the pride of Maharashtrian heritage.
+                </p>
+                <p>
+                  What started in a small home kitchen, with a love for authentic flavors and a heart full of dreams, has now become a mission to spread sweetness and smiles across every household.
+                </p>
+                <p>
+                  Each ladoo is handcrafted with pure desi ghee, the finest quality boondi, and the perfect measure of sweetness — just like it's made for our own family. No shortcuts, no compromises.
+                </p>
+              </div>
+
+              <div class="mt-8 pt-6 border-t" style="border-color:#D4500A33;">
+                <p class="font-serif text-xl italic font-semibold" style="color:#D4500A;">
+                  "Savor. Share. Spread Joy. ❤️"
+                </p>
+                <p class="text-sm mt-1 font-medium" style="color:#7A3D1A;">— The Ladoo Bidoo Family</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           DIVIDER: Story to Product
+      ═══════════════════════════════════════════════════════════ -->
+      <!-- <div class="relative h-12 overflow-hidden" style="background: linear-gradient(90deg, #FFE9B8 0%, #FFECC8 50%, #FFD580 100%);">
+        <svg viewBox="0 0 1440 48" preserveAspectRatio="none" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="scallop-pattern" x="0" y="0" width="60" height="48" patternUnits="userSpaceOnUse">
+              <circle cx="30" cy="0" r="30" fill="#FBF1DE"/>
+            </pattern>
+          </defs>
+          <rect width="1440" height="48" fill="url(#scallop-pattern)"/>
+          <path d="M0,24 Q90,12 180,24 Q270,36 360,24 Q450,12 540,24 Q630,36 720,24 Q810,12 900,24 Q990,36 1080,24 Q1170,12 1260,24 Q1350,36 1440,24 L1440,48 L0,48 Z" fill="#FBF1DE" opacity="0.6"/>
+        </svg>
+      </div> -->
+
+      <!-- ═══════════════════════════════════════════════════════════
+           PRODUCT SHOWCASE: MOTICHOOR LADOO
+      ═══════════════════════════════════════════════════════════ -->
+      <section id="product" class="product-bg section-decorated py-16 md:py-20 pinstripe">
+
+        <!-- Paithani decorative rule -->
+        <div class="absolute top-0 left-0 right-0 paithani-border-top opacity-60"></div>
+
+        <div class="section-deco section-deco-top-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-top-right section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" class="-scale-x-100"/>
+        </div>
+        <!-- <div class="section-deco section-deco-bottom-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Flowers_Utensils_Leaves.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-bottom-right hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Dhol_Player.png" alt="Decorative corner design" />
+        </div> -->
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+          <!-- Product showcase content grid -->
+          <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+
+            <!-- Left: product info -->
+            <div class="flex flex-col justify-between">
+              <div>
+                <!-- Mini badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase mb-5"
+                     style="background:#D4500A15;color:#D4500A;border:1px solid #D4500A40;">
+                  <span>✦</span> Our Special <span>✦</span>
+                </div>
+
+                <h3 class="font-serif text-4xl md:text-5xl font-black mb-4" style="color:#5C2D0E;">Motichoor Ladoo</h3>
+
+                <p class="text-sm md:text-base leading-relaxed mb-8 max-w-md" style="color:#7A3D1A;">
+                  Soft, juicy &amp; melt-in-mouth Motichoor Ladoos made with pure desi ghee, boondi, and the perfect touch of sweetness. A bite of nostalgia in every piece.
+                </p>
+
+                <!-- 2×2 feature grid -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(212,80,10,0.06);">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style="background:#D4500A20;">
+                      <i data-lucide="flame" class="w-4 h-4" style="color:#D4500A;"></i>
+                    </div>
+                    <span class="text-xs font-semibold leading-tight" style="color:#5C2D0E;">Made with Pure Ghee</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(212,80,10,0.06);">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style="background:#D4500A20;">
+                      <i data-lucide="leaf" class="w-4 h-4" style="color:#D4500A;"></i>
+                    </div>
+                    <span class="text-xs font-semibold leading-tight" style="color:#5C2D0E;">No Artificial Colors</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(212,80,10,0.06);">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style="background:#D4500A20;">
+                      <i data-lucide="book-open" class="w-4 h-4" style="color:#D4500A;"></i>
+                    </div>
+                    <span class="text-xs font-semibold leading-tight" style="color:#5C2D0E;">Traditional Recipe</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(212,80,10,0.06);">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style="background:#D4500A20;">
+                      <i data-lucide="hand" class="w-4 h-4" style="color:#D4500A;"></i>
+                    </div>
+                    <span class="text-xs font-semibold leading-tight" style="color:#5C2D0E;">Fresh &amp; Handcrafted</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pricing + CTA -->
+              <div class="flex flex-wrap items-center gap-6 mt-10">
+                <div>
+                  <div class="text-4xl md:text-5xl font-black font-serif" style="color:#5C2D0E;">₹199</div>
+                  <div class="text-sm font-medium" style="color:#7A3D1A;">per 250gms</div>
+                </div>
+                <a href="https://wa.me/917666621696?text=Hi!%20I%20want%20to%20order%20Motichoor%20Ladoo" target="_blank" rel="noopener"
+                   class="btn-primary flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-white text-sm shadow-xl"
+                   style="background:linear-gradient(135deg,#E8621A,#D4500A);">
+                  <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                  Order Now
+                </a>
+              </div>
+            </div>
+
+            <!-- Right: product image + wax seal -->
+            <div class="relative flex justify-center lg:justify-end">
+              <div class="w-full max-w-md h-96 overflow-hidden rounded-2xl shadow-xl border-[6px]" style=" border-color:#D9A441; box-shadow: 0 0 0 3px #FFF8ED, 0 0 0 6px #D9A441, 0 15px 35px rgba(0,0,0,.15); ">
+                <img
+                  id="product-showcase-img"
+                  src="Motichoor_ladoo.png"
+                  alt="Golden Motichoor Ladoo with cashew"
+                  class="w-full h-full object-cover"
+                  style="object-position:center 30%;"
+                />
+                <!-- Warm overlay -->
+                <div class="absolute inset-0" style="background:linear-gradient(220deg,rgba(245,166,35,0.2),transparent 50%);"></div>
+              </div>
+
+              <!-- Wax seal badge -->
+              <div class="wax-seal absolute top-5 right-5 w-20 h-20 md:w-24 md:h-24 flex flex-col items-center justify-center z-20 float-badge">
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Crown -->
+                  <path d="M48 10 L54 22 L66 18 L62 30 L74 34 L62 36 L66 48 L54 42 L48 54 L42 42 L30 48 L34 36 L22 34 L34 30 L30 18 L42 22 Z" fill="#E8B84B" opacity="0.7"/>
+                </svg>
+                <span class="relative text-white font-black text-xs text-center leading-tight z-10">100%<br/>PURE<br/>GHEE</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           DIVIDER: Product to Why Us
+      ═══════════════════════════════════════════════════════════ -->
+      <!-- <div class="relative h-16 overflow-hidden" style="background: linear-gradient(90deg, #FFF8ED 0%, #FFEEC8 50%, #FFF8ED 100%);">
+        <svg viewBox="0 0 1440 64" preserveAspectRatio="none" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="stamp-row" x="0" y="0" width="120" height="64" patternUnits="userSpaceOnUse">
+              <g opacity="0.15">
+                <rect x="10" y="10" width="40" height="44" fill="none" stroke="#D4500A" stroke-width="2" stroke-dasharray="3,2"/>
+                <circle cx="30" cy="32" r="2" fill="#D4500A"/>
+              </g>
+            </pattern>
+          </defs>
+          <rect width="1440" height="64" fill="url(#stamp-row)"/>
+          <path d="M0,32 Q180,16 360,32 Q540,48 720,32 Q900,16 1080,32 Q1260,48 1440,32" stroke="#D4500A" stroke-width="2" fill="none" opacity="0.3"/>
+          <path d="M0,40 Q180,28 360,40 Q540,52 720,40 Q900,28 1080,40 Q1260,52 1440,40" stroke="#F5A623" stroke-width="1.5" fill="none" opacity="0.25"/>
+        </svg>
+      </div> -->
+
+      <!-- ═══════════════════════════════════════════════════════════
+           WHY CHOOSE US
+      ═══════════════════════════════════════════════════════════ -->
+      <section id="why-us" class="section-decorated relative overflow-hidden py-16 md:py-20" style="background:#FFF8ED;">
+
+        <!-- Paithani decorative rule -->
+        <div class="absolute top-0 left-0 right-0 paithani-border-top opacity-60"></div>
+
+        <div class="section-deco section-deco-top-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-top-right section-deco-size hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" class="-scale-x-100"/>
+        </div>
+        <!-- <div class="section-deco section-deco-bottom-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Flowers_Utensils_Leaves.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-bottom-right hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Dhol_Player.png" alt="Decorative corner design" />
+        </div> -->
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <!-- Background garland pattern -->
+        <!-- <div class="absolute inset-0 garland-border opacity-30 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"> -->
+
+          <!-- Heading -->
+          <div class="text-center mb-14">
+            <!-- <div class="ornament-divider max-w-xs mx-auto mb-4">
+              <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="#D4500A"/><circle cx="10" cy="10" r="8" stroke="#F5A623" stroke-width="1.5" fill="none"/></svg>
+            </div> -->
+            <h2 class="font-serif text-4xl md:text-5xl font-bold mb-3" style="color:#5C2D0E;">Why Choose Us?</h2>
+            <p class="text-base max-w-md mx-auto" style="color:#7A3D1A;">Every ladoo we make is a promise — of quality, of tradition, of love.</p>
+          </div>
+
+          <!-- 4-column grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 rounded-2xl overflow-hidden shadow-lg"
+               style="border:1.5px solid #F5A62340;">
+            <div class="why-col p-8 md:p-10 text-center" style="background:#FFFDF8;">
+              <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center shadow-md"
+                   style="background:linear-gradient(135deg,#D4500A,#E8621A);">
+                <i data-lucide="leaf" class="w-7 h-7 text-white"></i>
+              </div>
+              <h3 class="font-serif text-lg font-bold mb-2" style="color:#5C2D0E;">Pure Ingredients</h3>
+              <p class="text-sm leading-relaxed" style="color:#7A3D1A;">We use only the finest, freshest ingredients. No preservatives, no shortcuts, no compromise.</p>
+            </div>
+            <div class="why-col p-8 md:p-10 text-center" style="background:#FFFDF8;">
+              <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center shadow-md"
+                   style="background:linear-gradient(135deg,#F5A623,#FFBE4D);">
+                <i data-lucide="home" class="w-7 h-7 text-white"></i>
+              </div>
+              <h3 class="font-serif text-lg font-bold mb-2" style="color:#5C2D0E;">Homemade Quality</h3>
+              <p class="text-sm leading-relaxed" style="color:#7A3D1A;">Prepared in small batches with love and care, just like your grandmother used to make them.</p>
+            </div>
+            <div class="why-col p-8 md:p-10 text-center" style="background:#FFFDF8;">
+              <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center shadow-md"
+                   style="background:linear-gradient(135deg,#8B2500,#B03010);">
+                <i data-lucide="utensils" class="w-7 h-7 text-white"></i>
+              </div>
+              <h3 class="font-serif text-lg font-bold mb-2" style="color:#5C2D0E;">Traditional Taste</h3>
+              <p class="text-sm leading-relaxed" style="color:#7A3D1A;">Authentic Maharashtrian recipes passed down through generations that bring back memories.</p>
+            </div>
+            <div class="why-col p-8 md:p-10 text-center" style="background:#FFFDF8;">
+              <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center shadow-md"
+                   style="background:linear-gradient(135deg,#D4500A,#8B2500);">
+                <i data-lucide="heart" class="w-7 h-7 text-white"></i>
+              </div>
+              <h3 class="font-serif text-lg font-bold mb-2" style="color:#5C2D0E;">Made with Love</h3>
+              <p class="text-sm leading-relaxed" style="color:#7A3D1A;">Every ladoo is made like it's for our own family — with patience, care, and a big heart.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           DIVIDER: Why Us to Testimonials
+      ═══════════════════════════════════════════════════════════ -->
+      <!-- <div class="relative h-14 overflow-hidden" style="background: linear-gradient(90deg, #FFF8ED 0%, #FFECC8 50%, #FFF8ED 100%);">
+        <svg viewBox="0 0 1440 56" preserveAspectRatio="none" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+
+          <path d="M0,28 Q360,0 720,28 Q1080,56 1440,28" stroke="#D4500A" stroke-width="2" fill="none" opacity="0.4"/>
+          <path d="M0,28 Q360,56 720,28 Q1080,0 1440,28" stroke="#F5A623" stroke-width="1.5" fill="none" opacity="0.3"/>
+          
+          <defs>
+            <pattern id="scallop-bottom" x="0" y="0" width="60" height="56" patternUnits="userSpaceOnUse">
+              <circle cx="30" cy="56" r="28" fill="#6B1A00"/>
+            </pattern>
+          </defs>
+          <rect width="1440" height="56" fill="url(#scallop-bottom)" opacity="0.08"/>
+        </svg>
+      </div> -->
+
+      <!-- ═══════════════════════════════════════════════════════════
+           TESTIMONIALS
+      ═══════════════════════════════════════════════════════════ -->
+      <section class="testimonials-bg section-decorated py-16 md:py-20">
+
+        <!-- Paithani stripe top -->
+        <div class="absolute top-0 left-0 right-0 paithani-border-top"></div>
+
+        <div class="section-deco section-deco-top-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-top-right hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Corner_Design.png" alt="Decorative corner design" class="-scale-x-100"/>
+        </div>
+        <div class="section-deco section-deco-bottom-left hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Flowers_Utensils_Leaves.png" alt="Decorative corner design" />
+        </div>
+        <div class="section-deco section-deco-bottom-right hidden md:block w-24 sm:w-28 md:w-32 lg:w-36">
+          <img src="/Santa_Maharaj.png" alt="Decorative corner design" />
+        </div>
+
+        <!-- Warli motif watermark on left -->
+        <div class="warli-watermark decor-hide-mobile" style="left:3%;top:10%;width:130px;height:280px;opacity:0.12;">
+          <svg viewBox="0 0 130 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Diya lamp chain -->
+            <g stroke="#FFBE4D" stroke-width="2">
+              <line x1="65" y1="0" x2="65" y2="30"/>
+              <path d="M45 35 Q65 25 85 35 L80 60 Q65 68 50 60 Z" fill="#FFBE4D" opacity="0.3"/>
+              <ellipse cx="65" cy="35" rx="20" ry="6" fill="#FFBE4D" opacity="0.5"/>
+              <line x1="65" y1="25" x2="65" y2="15"/>
+              <ellipse cx="65" cy="12" rx="4" ry="7" fill="#FFF" opacity="0.8"/>
+              <ellipse cx="65" cy="9"  rx="2" ry="4" fill="#FFF"/>
+            </g>
+            <line x1="65" y1="68" x2="65" y2="100" stroke="#FFBE4D" stroke-width="2"/>
+            <g stroke="#FFBE4D" stroke-width="2" transform="translate(0,70)">
+              <path d="M45 35 Q65 25 85 35 L80 60 Q65 68 50 60 Z" fill="#FFBE4D" opacity="0.3"/>
+              <ellipse cx="65" cy="35" rx="20" ry="6" fill="#FFBE4D" opacity="0.5"/>
+              <line x1="65" y1="25" x2="65" y2="15"/>
+              <ellipse cx="65" cy="12" rx="4" ry="7" fill="#FFF" opacity="0.8"/>
+            </g>
+            <line x1="65" y1="138" x2="65" y2="168" stroke="#FFBE4D" stroke-width="2"/>
+            <g stroke="#FFBE4D" stroke-width="2" transform="translate(0,140)">
+              <path d="M45 35 Q65 25 85 35 L80 60 Q65 68 50 60 Z" fill="#FFBE4D" opacity="0.3"/>
+              <ellipse cx="65" cy="35" rx="20" ry="6" fill="#FFBE4D" opacity="0.5"/>
+              <line x1="65" y1="25" x2="65" y2="15"/>
+              <ellipse cx="65" cy="12" rx="4" ry="7" fill="#FFF" opacity="0.8"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid lg:grid-cols-[1fr_auto] gap-12 items-start">
+
+            <!-- Left: heading + review cards -->
+            <div>
+              <!-- Heading -->
+              <div class="text-center mb-12">
+                <div class="ornament-divider max-w-xs mx-auto mb-4" style="color:#F5A623;">
+                  <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="#F5A623"/><circle cx="10" cy="10" r="8" stroke="#FFBE4D" stroke-width="1.5" fill="none"/></svg>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-3 text-white">Loved by Many</h2>
+                <p class="text-base" style="color:#FFBE4D;">Real stories from our happy sweet-loving customers</p>
+              </div>
+
+              <!-- 3 review cards -->
+              <div class="grid md:grid-cols-3 gap-5">
+
+                <div class="review-card rounded-2xl p-6 shadow-xl" style="background:rgba(255,248,237,0.10);border:1.5px solid rgba(255,190,77,0.25);backdrop-filter:blur(4px);">
+                  <!-- Stars -->
+                  <div class="flex gap-1 mb-3 star-shimmer">
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                  </div>
+                  <p class="text-sm italic leading-relaxed mb-4" style="color:#FFE9B8;">
+                    "The taste is pure nostalgia! Every bite reminds me of my nani's kitchen. Absolutely divine."
+                  </p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:#D4500A;color:white;">R</div>
+                    <span class="text-sm font-semibold" style="color:#FFBE4D;">— Riya G.</span>
+                  </div>
+                </div>
+
+                <div class="review-card rounded-2xl p-6 shadow-xl" style="background:rgba(255,248,237,0.10);border:1.5px solid rgba(255,190,77,0.25);backdrop-filter:blur(4px);">
+                  <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                  </div>
+                  <p class="text-sm italic leading-relaxed mb-4" style="color:#FFE9B8;">
+                    "Best motichoor ladoo I've ever had. The ghee flavor is so rich and the texture melts perfectly."
+                  </p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:#F5A623;color:#5C2D0E;">V</div>
+                    <span class="text-sm font-semibold" style="color:#FFBE4D;">— Vedant D.</span>
+                  </div>
+                </div>
+
+                <div class="review-card rounded-2xl p-6 shadow-xl" style="background:rgba(255,248,237,0.10);border:1.5px solid rgba(255,190,77,0.25);backdrop-filter:blur(4px);">
+                  <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                    <i data-lucide="star" class="w-4 h-4" style="color:#F5A623;fill:#F5A623;"></i>
+                  </div>
+                  <p class="text-sm italic leading-relaxed mb-4" style="color:#FFE9B8;">
+                    "You can taste the love in every bite! Ordered for Diwali and our whole family was delighted."
+                  </p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:#8B2500;color:white;">A</div>
+                    <span class="text-sm font-semibold" style="color:#FFBE4D;">— Ayush B.</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Dot indicators -->
+              <div class="flex justify-center gap-2 mt-8">
+                <div class="w-3 h-3 rounded-full" style="background:#D4500A;"></div>
+                <div class="w-2 h-2 rounded-full mt-0.5" style="background:#FFBE4D55;"></div>
+                <div class="w-2 h-2 rounded-full mt-0.5" style="background:#FFBE4D55;"></div>
+              </div>
+            </div>
+
+            <!-- Right: Festive stamp decorations -->
+            <div class="decor-hide-mobile flex flex-col gap-5 items-end">
+
+              <!-- PATAKHA stamp -->
+              <div style="transform:rotate(4deg);">
+                <div class="w-32 h-40 flex flex-col items-center justify-center shadow-xl"
+                     style="background:#C0392B;border:3px solid #E8B84B;position:relative;padding:10px;">
+                  <!-- Jagged edge via box-shadow trick -->
+                  <div class="absolute inset-0 pointer-events-none" style="background:
+                    radial-gradient(circle at 0 50%,    #6B1A00 8px,transparent 0),
+                    radial-gradient(circle at 100% 50%, #6B1A00 8px,transparent 0),
+                    radial-gradient(circle at 50% 0,    #6B1A00 8px,transparent 0),
+                    radial-gradient(circle at 50% 100%, #6B1A00 8px,transparent 0);
+                    background-repeat:repeat-y,repeat-y,repeat-x,repeat-x;
+                    background-size:16px 16px,16px 16px,16px 16px,16px 16px;
+                    background-position:0 0,100% 0,0 0,0 100%;"></div>
+                  <div class="relative z-10 flex flex-col items-center gap-1">
+                    <!-- Firecracker SVG -->
+                    <svg viewBox="0 0 40 50" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="14" y="20" width="12" height="24" rx="3" fill="#FFBE4D"/>
+                      <rect x="14" y="20" width="12" height="5" rx="1" fill="#E8B84B"/>
+                      <line x1="20" y1="20" x2="20" y2="8" stroke="#FFF" stroke-width="1.5" stroke-dasharray="2 2"/>
+                      <circle cx="20" cy="7" r="3" fill="#FFF" opacity="0.9"/>
+                      <!-- sparks -->
+                      <line x1="20" y1="4" x2="22" y2="0" stroke="#F5A623" stroke-width="1.5"/>
+                      <line x1="20" y1="4" x2="17" y2="1" stroke="#F5A623" stroke-width="1.5"/>
+                      <line x1="20" y1="4" x2="24" y2="2" stroke="#F5A623" stroke-width="1.5"/>
+                    </svg>
+                    <span class="font-black text-sm tracking-widest uppercase" style="color:#FFBE4D;">PATAKHA</span>
+                    <div class="w-full h-px" style="background:#E8B84B60;"></div>
+                    <span class="text-xs" style="color:#FFBE4D99;">Diwali Special</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BHINGRI stamp -->
+              <div style="transform:rotate(-5deg);">
+                <div class="w-32 h-40 flex flex-col items-center justify-center shadow-xl"
+                     style="background:#1A5C3A;border:3px solid #F5A623;position:relative;padding:10px;">
+                  <div class="absolute inset-0 pointer-events-none" style="background:
+                    radial-gradient(circle at 0 50%,    #0D2E1C 8px,transparent 0),
+                    radial-gradient(circle at 100% 50%, #0D2E1C 8px,transparent 0),
+                    radial-gradient(circle at 50% 0,    #0D2E1C 8px,transparent 0),
+                    radial-gradient(circle at 50% 100%, #0D2E1C 8px,transparent 0);
+                    background-repeat:repeat-y,repeat-y,repeat-x,repeat-x;
+                    background-size:16px 16px,16px 16px,16px 16px,16px 16px;
+                    background-position:0 0,100% 0,0 0,0 100%;"></div>
+                  <div class="relative z-10 flex flex-col items-center gap-1">
+                    <!-- Spinning top / bhingri SVG -->
+                    <svg viewBox="0 0 40 50" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <ellipse cx="20" cy="16" rx="16" ry="8" fill="#F5A623" opacity="0.9"/>
+                      <path d="M4 16 Q20 40 36 16 Q28 22 20 22 Q12 22 4 16Z" fill="#D4500A" opacity="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="46" stroke="#8B2500" stroke-width="2"/>
+                      <circle cx="20" cy="46" r="2" fill="#8B2500"/>
+                      <!-- concentric ring on top -->
+                      <circle cx="20" cy="14" r="8" stroke="#FFF" stroke-width="1" opacity="0.5"/>
+                      <circle cx="20" cy="14" r="4" stroke="#FFF" stroke-width="1" opacity="0.5"/>
+                    </svg>
+                    <span class="font-black text-sm tracking-widest uppercase" style="color:#F5A623;">BHINGRI</span>
+                    <div class="w-full h-px" style="background:#F5A62360;"></div>
+                    <span class="text-xs" style="color:#F5A62399;">Festival Fun</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom paithani stripe -->
+        <div class="absolute bottom-0 left-0 right-0 paithani-border-bottom"></div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           DIVIDER: Testimonials to Footer
+      ═══════════════════════════════════════════════════════════ -->
+      <!-- <div class="relative h-12 overflow-hidden" style="background: linear-gradient(90deg, #6B1A00 0%, #8B2500 50%, #6B1A00 100%);">
+        <svg viewBox="0 0 1440 48" preserveAspectRatio="none" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+         
+          <path d="M0,24 Q180,0 360,24 Q540,48 720,24 Q900,0 1080,24 Q1260,48 1440,24 L1440,0 L0,0 Z" fill="#FFF3DC" opacity="0.2"/>
+          <path d="M0,32 Q180,16 360,32 Q540,48 720,32 Q900,16 1080,32 Q1260,48 1440,32" stroke="#FFBE4D" stroke-width="1" fill="none" opacity="0.4"/>
+        </svg>
+      </div> -->
+
+    </main>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════════════════════════════ -->
+    <footer id="contact" class="footer-bg relative overflow-hidden">
+
+      <!-- Top wavy separator -->
+      <!-- <div class="h-8 overflow-hidden" style="background:#6B1A00;">
+        <svg viewBox="0 0 1440 32" preserveAspectRatio="none" class="w-full h-full" style="transform:scaleY(-1);" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,16 Q180,0 360,16 Q540,32 720,16 Q900,0 1080,16 Q1260,32 1440,16 L1440,0 L0,0 Z" fill="#FFF3DC"/>
+        </svg>
+      </div> -->
+
+      <!-- Main contact bar -->
+      <div class="py-14 md:py-18">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          <!-- "Let's Connect" heading -->
+          <div class="text-center mb-12">
+            <!-- <div class="ornament-divider max-w-xs mx-auto mb-4">
+              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="#D4500A"/><circle cx="9" cy="9" r="8" stroke="#F5A623" stroke-width="1.5" fill="none"/></svg>
+            </div> -->
+            <h2 class="font-serif text-3xl md:text-4xl font-bold" style="color:#5C2D0E;">Let's Connect</h2>
+            <p class="text-sm mt-2" style="color:#7A3D1A;">We'd love to hear from you — place an order or just say hi!</p>
+          </div>
+
+          <!-- 4-column contact grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/917666621696" target="_blank" rel="noopener"
+               class="group flex flex-col items-center p-6 rounded-2xl transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
+               style="background:rgba(212,80,10,0.06);border:1.5px solid #D4500A20;">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-md transition-transform group-hover:scale-110"
+                   style="background:linear-gradient(135deg,#25D366,#128C7E);">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L.057 23.5l5.798-1.519A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.787 9.787 0 01-5.048-1.4l-.361-.217-3.746.982.998-3.648-.236-.374A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+                </svg>
+              </div>
+              <span class="text-xs font-semibold tracking-wide uppercase mb-1" style="color:#7A3D1A;">Order on WhatsApp</span>
+              <span class="text-base font-bold" style="color:#5C2D0E;">+91 76666 21696</span>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/ladoo.bidoo/" target="_blank" rel="noopener"
+               class="group flex flex-col items-center p-6 rounded-2xl transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
+               style="background:rgba(212,80,10,0.06);border:1.5px solid #D4500A20;">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-md transition-transform group-hover:scale-110"
+                   style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);">
+                <i data-lucide="camera" class="w-7 h-7 text-white"></i>
+              </div>
+              <span class="text-xs font-semibold tracking-wide uppercase mb-1" style="color:#7A3D1A;">Follow us on Instagram</span>
+              <span class="text-base font-bold" style="color:#5C2D0E;">@ladoobidoo</span>
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:ladoo.bidoo@gmail.com"
+               class="group flex flex-col items-center p-6 rounded-2xl transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
+               style="background:rgba(212,80,10,0.06);border:1.5px solid #D4500A20;">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-md transition-transform group-hover:scale-110"
+                   style="background:linear-gradient(135deg,#D4500A,#8B2500);">
+                <i data-lucide="mail" class="w-7 h-7 text-white"></i>
+              </div>
+              <span class="text-xs font-semibold tracking-wide uppercase mb-1" style="color:#7A3D1A;">Email us</span>
+              <span class="text-base font-bold" style="color:#5C2D0E;">ladoo.bidoo@gmail.com</span>
+            </a>
+
+            <!-- Made with love -->
+            <div class="flex flex-col items-center p-6 rounded-2xl"
+                 style="background:rgba(212,80,10,0.06);border:1.5px solid #D4500A20;">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 shadow-md"
+                   style="background:linear-gradient(135deg,#F5A623,#D4500A);">
+                <i data-lucide="map-pin" class="w-7 h-7 text-white"></i>
+              </div>
+              <span class="text-xs font-semibold tracking-wide uppercase mb-1" style="color:#7A3D1A;">Crafted in</span>
+              <span class="text-base font-bold text-center" style="color:#5C2D0E;">Made with love in India 🇮🇳</span>
+            </div>
+
+          </div>
+
+          <!-- Decorative geometric divider -->
+          <div class="relative flex items-center my-8">
+            <div class="flex-1 h-px" style="background:linear-gradient(90deg,transparent,#D4500A40,transparent);"></div>
+            <div class="mx-4 flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rotate-45" style="background:#D4500A;"></div>
+              <div class="w-2.5 h-2.5 rotate-45" style="background:#F5A623;"></div>
+              <div class="w-1.5 h-1.5 rotate-45" style="background:#D4500A;"></div>
+            </div>
+            <div class="flex-1 h-px" style="background:linear-gradient(90deg,transparent,#D4500A40,transparent);"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Copyright strip -->
+      <div class="py-4 border-t" style="background:#5C2D0E;border-color:#7A3D1A;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p class="text-xs" style="color:#FFBE4D80;">
+            &copy; 2024 Ladoo Bidoo. All rights reserved.
+          </p>
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-px" style="background:#FFBE4D40;"></div>
+            <div class="w-1.5 h-1.5 rotate-45" style="background:#F5A623;opacity:0.5;"></div>
+            <div class="w-3 h-px" style="background:#FFBE4D40;"></div>
+          </div>
+          <p class="text-xs" style="color:#FFBE4D80;">
+            Handcrafted with ❤️ in Maharashtra
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Init Lucide icons
+      lucide.createIcons();
+
+      // Sticky header scroll effect - DISABLED (header color now constant)
+      // const header = document.getElementById('main-header');
+      // window.addEventListener('scroll', () => {
+      //   if (window.scrollY > 40) {
+      //     header.classList.add('scrolled');
+      //   } else {
+      //     header.classList.remove('scrolled');
+      //   }
+      // });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Intersection Observer for gentle fade-in on sections
+      const fadeEls = document.querySelectorAll('section, .review-card, .why-col');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      fadeEls.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
